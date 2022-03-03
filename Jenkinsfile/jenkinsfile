@@ -1,0 +1,56 @@
+pipeline{
+    agent{
+        label "any"
+    }
+    stages{
+        stage("UploadToServer"){
+            steps{
+                echo "========executing UploadToServer========"
+                sh 'sudo cp index.html /var/www/html'
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========UploadToServer executed successfully========"
+                }
+                failure{
+                    echo "========UploadToServer execution failed========"
+                }
+            }
+        }
+    }
+
+
+stage("restartHttpd"){
+            steps{
+                echo "========executing UploadToServer========"
+                sh 'sudo systemctl restart httpd'
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========restartHttpd executed successfully========"
+                }
+                failure{
+                    echo "========restartHttpd execution failed========"
+                }
+            }
+        }
+    }
+
+
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
