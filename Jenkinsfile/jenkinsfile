@@ -2,17 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('deploy') {
             steps {
                 echo 'Hello World'
+                sh 'sudo cp index.html /var/www/html'
+                sh 'sudo ls -al /var/www/html'
             }
         }
         
         stage('bash_script'){
             steps{
-                sh '''whoami
-                                                    pwd
-                                                    uname -a'''
+                sh 'sudo systemctl restart httpd'
+                sh 'sudo systemctl status httpd'
             }
         }
         
