@@ -11,7 +11,7 @@ pipeline {
             }
         }
         
-        stage('bash_script'){
+        stage('restart_httpd'){
             steps{
                 sh '''sudo systemctl restart httpd;
                 sudo systemctl status httpd;'''
