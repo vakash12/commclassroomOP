@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('deploy') {
+            steps {
+                echo 'Hello World'
+                sh '''sudo cp index.html /var/www/html;
+                sudo ls -al /var/www/html;'''
+                
+            }
+        }
+        
+        stage('restart_httpd'){
+            steps{
+                sh '''sudo systemctl restart httpd;
+                sudo systemctl status httpd;'''
+               
+            }
+        }
+        
+    }
+}
